@@ -113,3 +113,17 @@ app.put('/properties/:id', async (req, res) => {
     }
 });
 
+app.delete('/properties/:id', async (req, res) => {
+    try {
+        const property = await Property.findByPk(req.params.id);
+        if (property) {
+            await property.destroy();
+            res.status(204).send();
+        } else {
+            res.status(404).json({ error: 'Property not found' });
+        }
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
