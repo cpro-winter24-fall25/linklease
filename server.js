@@ -86,3 +86,16 @@ app.get('/properties', async (req, res) => {
     }
 });
 
+app.get('/properties/:id', async (req, res) => {
+    try {
+        const property = await Property.findByPk(req.params.id);
+        if (property) {
+            res.status(200).json(property);
+        } else {
+            res.status(404).json({ error: 'Property not found' });
+        }
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
