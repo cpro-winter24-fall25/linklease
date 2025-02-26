@@ -146,3 +146,16 @@ app.get('/payments', async (req, res) => {
     }
 });
 
+app.get('/payments/:id', async (req, res) => {
+    try {
+        const payment = await Payment.findByPk(req.params.id);
+        if (payment) {
+            res.status(200).json(payment);
+        } else {
+            res.status(404).json({ error: 'Payment not found' });
+        }
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
