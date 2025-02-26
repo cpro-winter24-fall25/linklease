@@ -67,3 +67,13 @@ app.delete('/users/:id', async (req, res) => {
     }
 });
 
+// Property Routes
+app.post('/properties', async (req, res) => {
+    try {
+        const property = await Property.create(req.body);
+        res.status(201).json(property);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
