@@ -137,3 +137,12 @@ app.post('/payments', async (req, res) => {
     }
 });
 
+app.get('/payments', async (req, res) => {
+    try {
+        const payments = await Payment.findAll();
+        res.status(200).json(payments);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
