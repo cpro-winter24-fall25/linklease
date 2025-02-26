@@ -219,3 +219,17 @@ app.get('/reviews/:id', async (req, res) => {
     }
 });
 
+app.put('/reviews/:id', async (req, res) => {
+    try {
+        const review = await Review.findByPk(req.params.id);
+        if (review) {
+            await review.update(req.body);
+            res.status(200).json(review);
+        } else {
+            res.status(404).json({ error: 'Review not found' });
+        }
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
