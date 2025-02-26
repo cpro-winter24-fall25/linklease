@@ -53,3 +53,17 @@ app.put('/users/:id', async (req, res) => {
     }
 });
 
+app.delete('/users/:id', async (req, res) => {
+    try {
+        const user = await User.findByPk(req.params.id);
+        if (user) {
+            await user.destroy();
+            res.status(204).send();
+        } else {
+            res.status(404).json({ error: 'User not found' });
+        }
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
