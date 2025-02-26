@@ -197,3 +197,12 @@ app.post('/reviews', async (req, res) => {
     }
 });
 
+app.get('/reviews', async (req, res) => {
+    try {
+        const reviews = await Review.findAll();
+        res.status(200).json(reviews);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
