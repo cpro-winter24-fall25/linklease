@@ -77,3 +77,12 @@ app.post('/properties', async (req, res) => {
     }
 });
 
+app.get('/properties', async (req, res) => {
+    try {
+        const properties = await Property.findAll();
+        res.status(200).json(properties);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
