@@ -7,3 +7,13 @@ const port = 3000;
 // Middleware
 app.use(bodyParser.json());
 
+// User Routes
+app.post('/users', async (req, res) => {
+    try {
+        const user = await User.create(req.body);
+        res.status(201).json(user);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
