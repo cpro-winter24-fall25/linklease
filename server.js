@@ -187,3 +187,13 @@ app.delete('/payments/:id', async (req, res) => {
     }
 });
 
+// Review Routes
+app.post('/reviews', async (req, res) => {
+    try {
+        const review = await Review.create(req.body);
+        res.status(201).json(review);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
