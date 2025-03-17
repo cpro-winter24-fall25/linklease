@@ -1,3 +1,4 @@
+const cors = require('cors');
 const express = require('express');
 const bodyParser = require('body-parser');
 require('dotenv').config();
@@ -5,7 +6,10 @@ const { User, Property, Payment, Review } = require('./models');
 const { router: authRoutes, authenticateToken } = require('./auth'); // Import authentication
 
 const app = express();
-const port = 3000;
+app.use(cors({ origin: "http://localhost:3000" })); // Allow requests from frontend
+app.use(express.json()); // Ensure JSON body parsing
+
+const port = 4000;
 
 // Middleware
 app.use(bodyParser.json());
