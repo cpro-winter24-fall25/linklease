@@ -5,8 +5,8 @@ const seedDatabase = async () => {
         await sequelize.sync({ force: true });
 
         // Create Users
-        const user1 = await User.create({ username: 'john_doe', email: 'john@example.com', password_hash: 'hashedpassword', role: 'buyer' });
-        const user2 = await User.create({ username: 'alice_seller', email: 'alice@example.com', password_hash: 'hashedpassword', role: 'seller' });
+        const user1 = await User.create({ username: 'john_doe', email: 'john@example.com', password_hash: 'hashedpassword', role: 'renter' });
+        const user2 = await User.create({ username: 'alice_seller', email: 'alice@example.com', password_hash: 'hashedpassword', role: 'landlord' });
 
         // Create Properties
         const property1 = await Property.create({ owner_id: user2.user_id, title: 'Luxury Condo', location: 'New York', price: 250000, property_type: 'condo' });
