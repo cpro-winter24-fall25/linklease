@@ -5,7 +5,13 @@
 ```
 npm install sequelize mysql2  
 npm install dotenv  
-npm install express body-parser 
+npm install express body-parser
+npm install react-router-dom
+npm install react react-dom
+npm install cors
+npm install bcryptjs
+npm install jsonwebtoken
+npm install axios 
 ```
 
 ## MySQL Command
