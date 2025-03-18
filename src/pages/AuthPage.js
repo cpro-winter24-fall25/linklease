@@ -34,7 +34,7 @@ const AuthPage = ({ type }) => {
 
             if (type === "login") {
                 localStorage.setItem("token", data.token);
-                navigate("/dashboard");
+                navigate("/home");
             } else {
                 navigate("/login");
             }
@@ -60,7 +60,10 @@ const AuthPage = ({ type }) => {
                                 className="input-field"
                                 required
                             />
-
+                            <select name="role" value={formData.role} onChange={handleChange} className="input-field">
+                                <option value="renter">Renter</option>
+                                <option value="landlord">Landlord</option>
+                            </select>
                         </>
                     )}
                     <input
@@ -81,11 +84,6 @@ const AuthPage = ({ type }) => {
                         className="input-field"
                         required
                     />
-                    <select name="role" value={formData.role} onChange={handleChange} className="input-field">
-                        <option value="renter">Renter</option>
-                        <option value="landlord">Landlord</option>
-                        <option value="admin">Admin</option>
-                    </select>
 
                     <button type="submit" className="auth-button">
                         {type === "login" ? "Login" : "Register"}
