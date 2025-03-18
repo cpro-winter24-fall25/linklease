@@ -53,14 +53,7 @@ const HomePage = () => {
             <div className="content">
                 <div className="left-section">
                     {/* Left Section (Empty for Now) */}
-                    {/* Static Google Maps Image */}
-                    <img 
-                        src="https://maps.googleapis.com/maps/api/staticmap?center=37.7749,-122.4194&zoom=12&size=400x300&maptype=roadmap
-                        &markers=color:red%7C37.7749,-122.4194
-                        &key=AIzaSyAXhBlA8QrgqPvU640Wc0CUp1Q1NcHahJE" 
-                        alt="Google Maps Static" 
-                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                    />
+                    <img src="/static_maps.png" alt="Google Maps Static" />
                 </div>
 
                 <div className="right-section">
