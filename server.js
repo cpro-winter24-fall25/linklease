@@ -10,7 +10,7 @@ const app = express();
 app.use(cors({ origin: "http://localhost:3000" })); // Allow requests from frontend
 app.use(express.json()); // Ensure JSON body parsing
 
-const port = 4000;
+const port = 4001;
 
 // Middleware
 app.use(bodyParser.json());

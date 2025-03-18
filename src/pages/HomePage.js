@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./HomePage.css";
 
+const port = 4001;
+
 const HomePage = () => {
     const navigate = useNavigate();
     const [properties, setProperties] = useState([]);
@@ -20,7 +22,7 @@ const HomePage = () => {
 
     const fetchProperties = async () => {
         try {
-            const response = await axios.get("http://localhost:4000/properties"); // No token needed
+            const response = await axios.get(`http://localhost:${port}/properties`); // No token needed
             setProperties(response.data);
         } catch (error) {
             console.error("🔥 Error fetching properties:", error);
@@ -51,6 +53,14 @@ const HomePage = () => {
             <div className="content">
                 <div className="left-section">
                     {/* Left Section (Empty for Now) */}
+                    {/* Static Google Maps Image */}
+                    <img 
+                        src="https://maps.googleapis.com/maps/api/staticmap?center=37.7749,-122.4194&zoom=12&size=400x300&maptype=roadmap
+                        &markers=color:red%7C37.7749,-122.4194
+                        &key=AIzaSyAXhBlA8QrgqPvU640Wc0CUp1Q1NcHahJE" 
+                        alt="Google Maps Static" 
+                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    />
                 </div>
 
                 <div className="right-section">

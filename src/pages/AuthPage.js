@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AuthPage.css";
 
+const port = 4001;
+
 const AuthPage = ({ type }) => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -23,7 +25,7 @@ const AuthPage = ({ type }) => {
         const endpoint = type === "login" ? "/auth/login" : "/auth/register";
 
         try {
-            const response = await fetch(`http://localhost:4000${endpoint}`, {
+            const response = await fetch(`http://localhost:${port}${endpoint}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
@@ -51,19 +53,19 @@ const AuthPage = ({ type }) => {
                 <form onSubmit={handleSubmit}>
                     {type === "register" && (
                         <>
+                            <select name="role" value={formData.role} onChange={handleChange} className="input-field w85">
+                                <option value="renter">Renter</option>
+                                <option value="landlord">Landlord</option>
+                            </select>
                             <input
                                 type="text"
                                 name="username"
                                 placeholder="Username"
                                 value={formData.username}
                                 onChange={handleChange}
-                                className="input-field"
+                                className="input-field w80"
                                 required
                             />
-                            <select name="role" value={formData.role} onChange={handleChange} className="input-field">
-                                <option value="renter">Renter</option>
-                                <option value="landlord">Landlord</option>
-                            </select>
                         </>
                     )}
                     <input
@@ -72,7 +74,7 @@ const AuthPage = ({ type }) => {
                         placeholder="Email"
                         value={formData.email}
                         onChange={handleChange}
-                        className="input-field"
+                        className="input-field w80"
                         required
                     />
                     <input
@@ -81,11 +83,11 @@ const AuthPage = ({ type }) => {
                         placeholder="Password"
                         value={formData.password}
                         onChange={handleChange}
-                        className="input-field"
+                        className="input-field w80"
                         required
                     />
 
-                    <button type="submit" className="auth-button">
+                    <button type="submit" className="auth-button w85">
                         {type === "login" ? "Login" : "Register"}
                     </button>
                 </form>
