@@ -1,0 +1,67 @@
+.home-container {
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar {
+    padding: 8px;
+    width: 250px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.logout-btn,
+.login-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.logout-btn:hover,
+.login-btn:hover {
+    background-color: #c82333;
+}
+
+/* 🔥 Make the layout a flex container */
+.content {
+    display: flex;
+    height: 100vh;
+    /* Full viewport height */
+}
+
+/* 🏠 Left half (empty space) */
+.left-section {
+    flex: 1;
+    background-color: #f4f4f4;
+}
+
+/* 📋 Right half (property listings) */
+.right-section {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.property-card {
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.property-card:hover {
+    background-color: #f9f9f9;
+}
