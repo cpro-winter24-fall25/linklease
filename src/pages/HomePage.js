@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./HomePage.css";
+import MapComponent from "../components/MapComponent"; // ✅ Import the map
 
 const HomePage = () => {
     const navigate = useNavigate();
@@ -10,17 +11,14 @@ const HomePage = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-        // Check if user is logged in
         const token = localStorage.getItem("token");
-        setIsLoggedIn(!!token); // Converts token into true/false
-
-        // 🔥 Fetch properties (No Authorization required)
+        setIsLoggedIn(!!token);
         fetchProperties();
     }, []);
 
     const fetchProperties = async () => {
         try {
-            const response = await axios.get("http://localhost:4000/properties"); // No token needed
+            const response = await axios.get("http://localhost:4000/properties");
             setProperties(response.data);
         } catch (error) {
             console.error("🔥 Error fetching properties:", error);
@@ -30,7 +28,7 @@ const HomePage = () => {
     const handleLogout = () => {
         localStorage.removeItem("token");
         setIsLoggedIn(false);
-        fetchProperties(); // ✅ Reload properties after logout
+        fetchProperties();
     };
 
     const filteredProperties = properties.filter((property) =>
@@ -50,11 +48,11 @@ const HomePage = () => {
 
             <div className="content">
                 <div className="left-section">
-                    {/* Left Section (Empty for Now) */}
+                    {/* ✅ Google Maps component */}
+                    <MapComponent />
                 </div>
 
                 <div className="right-section">
-                    {/* 🔎 Search Bar Inside Right Section */}
                     <div className="search-container">
                         <input
                             type="text"
