@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./HomePage.css";
-import MapComponent from "../components/MapComponent"; // ✅ Import the map
+import MapComponent from "../components/MapComponent"; // Make sure this path is correct
 
 const HomePage = () => {
     const navigate = useNavigate();
@@ -40,16 +40,15 @@ const HomePage = () => {
             <nav className="navbar">
                 <h2>🏠 LinkLease</h2>
                 {isLoggedIn ? (
-                    <button onClick={handleLogout} className="logout-btn">Log out</button>
+                    <button onClick={handleLogout} className="auth-btn">Log out</button>
                 ) : (
-                    <button onClick={() => navigate("/login")} className="login-btn">Log in</button>
+                    <button onClick={() => navigate("/login")} className="auth-btn">Log in</button>
                 )}
             </nav>
 
             <div className="content">
                 <div className="left-section">
-                    {/* ✅ Google Maps component */}
-                    <MapComponent />
+                    <MapComponent properties={filteredProperties} />
                 </div>
 
                 <div className="right-section">
