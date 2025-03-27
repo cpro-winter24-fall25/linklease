@@ -11,7 +11,8 @@ npm install react react-dom
 npm install cors
 npm install bcryptjs
 npm install jsonwebtoken
-npm install axios 
+npm install axios  
+npm install @react-google-maps/api  
 ```
 
 ## MySQL Command
