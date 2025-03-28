@@ -1,4 +1,19 @@
-## Install Dependencies
+## General Dependencies
+```
+npm install -g nodemon
+```
+
+## Backend Dependencies
+```
+npm install @react-google-maps/api @testing-library/jest-dom @testing-library/react @testing-library/user-event ajv ajv-keywords axios bcryptjs body-parser cors dotenv express jsonwebtoken mongoose mysql2 react react-dom react-router-dom react-scripts sequelize stripe web-vitals
+```
+
+## Frontend Dependencies
+```
+npm install @react-google-maps/api @testing-library/dom @testing-library/jest-dom @testing-library/react @testing-library/user-event axios react react-dom react-router-dom react-scripts web-vitals 
+```
+
+## All Dependencies
 ```
 npm install sequelize mysql2  
 npm install dotenv  
@@ -12,16 +27,6 @@ npm install axios
 npm install @react-google-maps/api
 npm install stripe  
 ```
-
-# general
-npm install -g nodemon  
-
-# backend
-npm install cors backend  
-npm install stripe  
-
-# frontend
-npm install react-router-dom axios @react-google-maps/api  
 
 ## MySQL Command
 ```
