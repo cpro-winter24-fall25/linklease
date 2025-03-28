@@ -1,6 +1,3 @@
-# linklease
-
-
 ## Install Dependencies
 ```
 npm install sequelize mysql2  
@@ -15,6 +12,16 @@ npm install axios
 npm install @react-google-maps/api
 npm install stripe  
 ```
+
+# general
+npm install -g nodemon  
+
+# backend
+npm install cors backend  
+npm install stripe  
+
+# frontend
+npm install react-router-dom axios @react-google-maps/api  
 
 ## MySQL Command
 ```
