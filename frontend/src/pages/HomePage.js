@@ -2,27 +2,24 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./HomePage.css";
-
-const port = 4001;
+import MapComponent from "../components/MapComponent";
 
 const HomePage = () => {
     const navigate = useNavigate();
     const [properties, setProperties] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [hoveredProperty, setHoveredProperty] = useState(null); // NEW
 
     useEffect(() => {
-        // Check if user is logged in
         const token = localStorage.getItem("token");
-        setIsLoggedIn(!!token); // Converts token into true/false
-
-        // 🔥 Fetch properties (No Authorization required)
+        setIsLoggedIn(!!token);
         fetchProperties();
     }, []);
 
     const fetchProperties = async () => {
         try {
-            const response = await axios.get(`http://localhost:${port}/properties`); // No token needed
+            const response = await axios.get("http://localhost:4000/properties");
             setProperties(response.data);
         } catch (error) {
             console.error("🔥 Error fetching properties:", error);
@@ -32,7 +29,7 @@ const HomePage = () => {
     const handleLogout = () => {
         localStorage.removeItem("token");
         setIsLoggedIn(false);
-        fetchProperties(); // ✅ Reload properties after logout
+        fetchProperties();
     };
 
     const filteredProperties = properties.filter((property) =>
@@ -44,20 +41,21 @@ const HomePage = () => {
             <nav className="navbar">
                 <h2>🏠 LinkLease</h2>
                 {isLoggedIn ? (
-                    <button onClick={handleLogout} className="logout-btn">Log out</button>
+                    <button onClick={handleLogout} className="auth-btn">Log out</button>
                 ) : (
-                    <button onClick={() => navigate("/login")} className="login-btn">Log in</button>
+                    <button onClick={() => navigate("/login")} className="auth-btn">Log in</button>
                 )}
             </nav>
 
             <div className="content">
                 <div className="left-section">
-                    {/* Left Section (Empty for Now) */}
-                    <img src="/static_maps.png" alt="Google Maps Static" />
+                    <MapComponent
+                        properties={filteredProperties}
+                        hoveredProperty={hoveredProperty}
+                    />
                 </div>
 
                 <div className="right-section">
-                    {/* 🔎 Search Bar Inside Right Section */}
                     <div className="search-container">
                         <input
                             type="text"
@@ -76,6 +74,8 @@ const HomePage = () => {
                                     key={property.property_id}
                                     className="property-card"
                                     onClick={() => navigate(`/property/${property.property_id}`)}
+                                    onMouseEnter={() => setHoveredProperty(property)} // 👈 Hover start
+                                    onMouseLeave={() => setHoveredProperty(null)} // 👈 Hover end
                                 >
                                     <div className="property-info">
                                         <h3>${property.price}</h3>

@@ -6,7 +6,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 2px 20px;
     background-color: #fff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
@@ -18,19 +18,27 @@
     border-radius: 5px;
 }
 
-.logout-btn,
-.login-btn {
-    background-color: #dc3545;
-    color: white;
+/* ✨ Beautiful Login/Logout Button (Same Size) */
+.auth-btn {
+    background-color: #4f46e5;
+    /* Indigo */
+    color: #fff;
     border: none;
-    padding: 8px 12px;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
+    min-width: 100px;
+    /* ✅ Ensures same width */
+    text-align: center;
+    /* ✅ Centers text */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.logout-btn:hover,
-.login-btn:hover {
-    background-color: #c82333;
-}
+
+
 
 /* 🔥 Make the layout a flex container */
 .content {
