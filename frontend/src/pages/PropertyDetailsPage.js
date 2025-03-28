@@ -22,7 +22,7 @@ const PropertyDetailsPage = () => {
             const response = await axios.get(`http://localhost:${port}/properties/${id}`);
             setProperty(response.data);
         } catch (error) {
-            console.error("🔥 Error fetching property details:", error);
+            console.error("Error fetching property details:", error);
         }
     };
 
@@ -36,9 +36,9 @@ const PropertyDetailsPage = () => {
             const propertyReviews = allReviews.filter(review => review.property_id === Number(id));
             setReviews(propertyReviews);
 
-            console.log("✅ Filtered Reviews:", propertyReviews); // Debugging
+            // console.log("Filtered Reviews:", propertyReviews); // Debugging
         } catch (error) {
-            console.error("🔥 Error fetching reviews:", error);
+            console.error("Error fetching reviews:", error);
         }
     };
 
@@ -67,7 +67,7 @@ const PropertyDetailsPage = () => {
             <p><strong>Location:</strong> {property.location}</p>
             <p><strong>Type:</strong> {property.property_type}</p>
             {property.image && <img src={property.image} alt={property.title} />}
-            <button onClick={handlePayment} className="pay-button">Pay Rent</button>
+            <button onClick={handlePayment} className="pay-button">Rent Property</button>
 
             <div className="reviews-section">
                 <h3>Reviews</h3>

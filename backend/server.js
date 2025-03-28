@@ -277,12 +277,10 @@ app.delete('/properties/:id', authenticateToken, async (req, res) => {
 // Stripe Checkout Endpoint
 app.post('/create-checkout-session', async (req, res) => {
     try {
-        // eslint-disable-next-line no-unused-vars
         const { propertyId, price, title } = req.body;
 
-        const successUrl = `http://localhost:3000/success`; // Redirects to a simple success page
+        const successUrl = `http://localhost:3000/success?propertyId=${propertyId}`; // Passing propertyId in success URL
         const cancelUrl = `http://localhost:3000/cancel`; // Redirects to the cancel page
-
 
         // Create a Stripe Checkout Session
         const session = await stripe.checkout.sessions.create({
@@ -308,6 +306,28 @@ app.post('/create-checkout-session', async (req, res) => {
         res.json({ url: session.url });
     } catch (error) {
         console.error("Stripe checkout session creation error:", error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+// Endpoint to update property status after successful payment
+app.post('/update-property-status', async (req, res) => {
+    try {
+        const { propertyId } = req.body;
+
+        // Find the property by its ID
+        const property = await Property.findByPk(propertyId);
+        if (!property) {
+            return res.status(404).json({ message: "Property not found" });
+        }
+
+        // Update the 'forRent' status to false
+        property.forRent = false;
+        await property.save(); // Save the updated property to the database
+
+        res.json({ message: "Property status updated successfully" });
+    } catch (error) {
+        console.error("Error updating property status:", error);
         res.status(500).send("Internal Server Error");
     }
 });
