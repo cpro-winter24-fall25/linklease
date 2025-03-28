@@ -12,7 +12,8 @@ npm install cors
 npm install bcryptjs
 npm install jsonwebtoken
 npm install axios  
-npm install @react-google-maps/api  
+npm install @react-google-maps/api
+npm install stripe  
 ```
 
 ## MySQL Command
