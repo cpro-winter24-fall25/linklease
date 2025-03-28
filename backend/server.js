@@ -3,14 +3,19 @@ const express = require('express');
 const bcrypt = require('bcryptjs'); // Import bcrypt
 const bodyParser = require('body-parser');
 require('dotenv').config();
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const { User, Property, Payment, Review } = require('./models');
 const { router: authRoutes, authenticateToken } = require('./auth'); // Import authentication
 
 const app = express();
-app.use(cors({ origin: "http://localhost:3000" })); // Allow requests from frontend
+// Enable CORS with credentials
+app.use(cors({
+    origin: 'http://localhost:3000', // Allow the frontend to connect
+    credentials: true // Allow credentials (cookies, authentication headers)
+}));
 app.use(express.json()); // Ensure JSON body parsing
 
-const port = 4001;
+const port = 4000;
 
 // Middleware
 app.use(bodyParser.json());
@@ -29,13 +34,13 @@ app.post('/users', authenticateToken, async (req, res) => {
     try {
         const { username, email, password, role } = req.body;
 
-        // ✅ Hash the password before saving to the database
+        // Hash the password before saving to the database
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = await User.create({
             username,
             email,
-            password_hash: hashedPassword, // ✅ Use hashed password
+            password_hash: hashedPassword, // Use hashed password
             role
         });
 
@@ -159,7 +164,7 @@ app.post('/reviews', authenticateToken, async (req, res) => {
     }
 });
 
-app.get('/reviews', authenticateToken, async (req, res) => {
+app.get('/reviews', async (req, res) => {
     try {
         const reviews = await Review.findAll();
         res.status(200).json(reviews);
@@ -218,7 +223,9 @@ app.post('/properties', authenticateToken, async (req, res) => {
 
 app.get('/properties', async (req, res) => {
     try {
-        const properties = await Property.findAll();
+        const properties = await Property.findAll({
+            where: { forRent: true } // Only return properties that are for rent
+        });
         res.status(200).json(properties);
     } catch (err) {
         res.status(400).json({ error: err.message });
@@ -265,6 +272,57 @@ app.delete('/properties/:id', authenticateToken, async (req, res) => {
         res.status(400).json({ error: err.message });
     }
 });
+
+
+// Stripe Checkout Endpoint
+app.post('/create-checkout-session', async (req, res) => {
+    try {
+        // eslint-disable-next-line no-unused-vars
+        const { propertyId, price, title } = req.body;
+
+        const successUrl = `http://localhost:3000/success`; // Redirects to a simple success page
+        const cancelUrl = `http://localhost:3000/cancel`; // Redirects to the cancel page
+
+
+        // Create a Stripe Checkout Session
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: [
+                {
+                    price_data: {
+                        currency: 'cad',
+                        product_data: {
+                            name: title,  // Property title
+                        },
+                        unit_amount: Math.round(price * 100), // Convert price to cents
+                    },
+                    quantity: 1,
+                },
+            ],
+            mode: 'payment',
+            success_url: successUrl,
+            cancel_url: cancelUrl,
+        });
+
+        // Return the session URL to the client
+        res.json({ url: session.url });
+    } catch (error) {
+        console.error("Stripe checkout session creation error:", error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+app.get("/get-session-details", async (req, res) => {
+    const { sessionId } = req.query;
+    try {
+        const session = await stripe.checkout.sessions.retrieve(sessionId);
+        res.json(session);
+    } catch (error) {
+        console.error("Error retrieving session:", error);
+        res.status(500).send("Error retrieving session details.");
+    }
+});
+
 
 // Start the server
 app.listen(port, () => {

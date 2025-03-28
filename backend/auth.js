@@ -37,7 +37,7 @@ router.post('/register', async (req, res) => {
     }
 });
 
-// ✅ User Login - This is where the token is generated
+// User Login - This is where the token is generated
 router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -47,14 +47,15 @@ router.post('/login', async (req, res) => {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
 
-        // ✅ Generate the JWT token correctly (WITHOUT "Bearer")
+        // Generate the JWT token correctly (WITHOUT "Bearer")
         const token = jwt.sign(
             { user_id: user.user_id, role: user.role },
             SECRET_KEY,
             { expiresIn: '1h' }
         );
 
-        res.status(200).json({ token }); // ✅ Only return the token, no "Bearer"
+        console.log(token);
+        res.status(200).json({ token }); // Only return the token, no "Bearer"
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
