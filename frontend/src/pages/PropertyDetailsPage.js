@@ -121,7 +121,7 @@ const PropertyDetailsPage = () => {
 
     return (
         <div className="property-details-container">
-            <span onClick={() => navigate("/home")} className="create-link">Back</span>
+            <button onClick={() => navigate("/home")} className="back-btn">Back</button>
 
             {isLandlordOwner && (
                 <div className="landlord-actions">

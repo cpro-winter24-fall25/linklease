@@ -78,7 +78,15 @@ const EditReviewPage = () => {
                     required
                 ></textarea>
 
-                <button type="submit">Update Review</button>
+                <div className="edit-actions">
+                    <div className="half-width-button">
+                        <button type="button" onClick={() => navigate(`/property/${propertyId}`)}>Back</button>
+                    </div>
+                    <div className="half-width-button">
+                        <button type="submit">Update Review</button>
+                    </div>
+                </div>
+
             </form>
         </div>
     );
