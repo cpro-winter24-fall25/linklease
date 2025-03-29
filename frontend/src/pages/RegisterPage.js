@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./AuthForm.css"; // Reuse the same CSS as Login
+import "../styles/AuthForm.css"; // Reuse the same CSS as Login
 
 const RegisterPage = () => {
     const navigate = useNavigate();

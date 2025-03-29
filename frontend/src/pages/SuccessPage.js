@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import "../styles/SuccessPage.css";
 
 const SuccessPage = () => {
     const location = useLocation();
@@ -22,16 +23,17 @@ const SuccessPage = () => {
     }, [propertyId]);
 
     return (
-        <div>
-            <h1>Payment Successful!</h1>
-            <p>Your transaction has been completed.</p>
-            <p>You have successfully rented the property!</p>
-            <p>If you have any questions, feel free to contact us.</p>
-            
-            {/* Link back to home page */}
-            <Link to="/" style={{ display: "block", marginTop: "20px", textDecoration: "none", color: "blue" }}>
-                Go back to Home
-            </Link>
+        <div className="success-container">
+            <div className="success-box">
+                <h1>Payment Successful!</h1>
+                <p>Your transaction has been completed.</p>
+                <p>You have successfully rented the property!</p>
+                <p>If you have any questions, feel free to contact us.</p>
+
+                <Link to="/" className="home-link">
+                    Go back to Home
+                </Link>
+            </div>
         </div>
     );
 };

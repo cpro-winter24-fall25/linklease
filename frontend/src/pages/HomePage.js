@@ -1,19 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./HomePage.css";
-import MapComponent from "../components/MapComponent";
+import { jwtDecode } from "jwt-decode";
+import "../styles/HomePage.css";
+import MapComponent from "../component/MapComponent";
 
 const HomePage = () => {
     const navigate = useNavigate();
     const [properties, setProperties] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [hoveredProperty, setHoveredProperty] = useState(null); // NEW
+    const [hoveredProperty, setHoveredProperty] = useState(null);
+    const [userRole, setUserRole] = useState("");
 
     useEffect(() => {
         const token = localStorage.getItem("token");
-        setIsLoggedIn(!!token);
+        if (token) {
+            setIsLoggedIn(true);
+            const decoded = jwtDecode(token);
+            setUserRole(decoded.role); // 👈 get role from token
+        } else {
+            setIsLoggedIn(false);
+        }
         fetchProperties();
     }, []);
 
@@ -29,12 +37,17 @@ const HomePage = () => {
     const handleLogout = () => {
         localStorage.removeItem("token");
         setIsLoggedIn(false);
+        setUserRole("");
         fetchProperties();
     };
 
-    const filteredProperties = properties.filter((property) =>
-        property.title.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const filteredProperties = properties.filter((property) => {
+        const query = searchQuery.toLowerCase();
+        return (
+            property.title.toLowerCase().includes(query) ||
+            property.location.toLowerCase().includes(query)
+        );
+    });
 
     return (
         <div className="home-container">
@@ -66,7 +79,16 @@ const HomePage = () => {
                         />
                     </div>
 
-                    <h2>Property Listings</h2>
+                    <div className="property-listing-header">
+                        <h2>Property Listings</h2>
+                        {isLoggedIn && userRole === "landlord" && (
+                            <button className="auth-btn create-btn" onClick={() => navigate("/create-property")}>
+                                <img src="/icons/add-line.png" alt="Add" className="create-icon" />
+                                Add Listing
+                            </button>
+                        )}
+                    </div>
+
                     <div className="property-list">
                         {filteredProperties.length > 0 ? (
                             filteredProperties.map((property) => (
@@ -74,8 +96,8 @@ const HomePage = () => {
                                     key={property.property_id}
                                     className="property-card"
                                     onClick={() => navigate(`/property/${property.property_id}`)}
-                                    onMouseEnter={() => setHoveredProperty(property)} // 👈 Hover start
-                                    onMouseLeave={() => setHoveredProperty(null)} // 👈 Hover end
+                                    onMouseEnter={() => setHoveredProperty(property)}
+                                    onMouseLeave={() => setHoveredProperty(null)}
                                 >
                                     <div className="property-info">
                                         <h3>${property.price}</h3>
