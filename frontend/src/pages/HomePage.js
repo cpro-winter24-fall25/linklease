@@ -82,12 +82,10 @@ const HomePage = () => {
                     <div className="property-listing-header">
                         <h2>Property Listings</h2>
                         {isLoggedIn && userRole === "landlord" && (
-                            <span
-                                className="create-link"
-                                onClick={() => navigate("/create-property")}
-                            >
-                                Create New
-                            </span>
+                            <button className="auth-btn create-btn" onClick={() => navigate("/create-property")}>
+                                <img src="/icons/add-line.png" alt="Add" className="create-icon" />
+                                Add Listing
+                            </button>
                         )}
                     </div>
 
