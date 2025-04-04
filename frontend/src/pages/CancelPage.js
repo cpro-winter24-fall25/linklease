@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../styles/CancelPage.css"; // Import the stylesheet
+import "../styles/CancelPage.css";
 
 const CancelPage = () => {
     return (
